@@ -30,7 +30,7 @@ post '/callback' do
       case event.type
       when Line::Bot::Event::MessageType::Text
         # msg = Hello.new.message(event.message['text'])
-        msg = "なめとんのか"
+        msg = "なめとんのか我"
         message = {
           type: 'text',
           text: msg
