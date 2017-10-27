@@ -1,18 +1,21 @@
 # A sample Gemfile
 source "https://rubygems.org"
 
+gem 'rake'
 gem 'sinatra'
 gem 'sinatra-contrib'
-gem 'rake'
+gem "activerecord"
+gem 'sinatra-activerecord'
+gem 'activerecord'
+gem 'sinatra-activerecord'
 gem 'line-bot-api'
+gem 'nokogiri'
+gem 'levenshtein'
 # test
 gem "rspec", ">= 3.0.0"
-
-# db
-gem "activerecord", "< 5.0.0"
-gem "sinatra-activerecord"
 group :development do
   gem 'sqlite3'
+  gem "simplecov"
 end
 
 group :production do
