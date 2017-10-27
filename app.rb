@@ -9,6 +9,10 @@ get '/' do
   "Hello world"
 end
 
+get '/map' do
+  erb :map
+end
+
 def client
   @client ||= Line::Bot::Client.new { |config|
 
