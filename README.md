@@ -23,7 +23,23 @@ Webhook URLはheroku urlに/callbackをつけて設定してください
 今回のアプリを選択 -> Setting -> Reveal Config Vars  
 ここであなたのLINE_CHANNEL_SECRETとLINE_CHANNEL_TOKENを設定してください  
 
-この段階でBotを友達追加してもらうとオウム返しされるはず！  
+この段階でBotを友達追加してもらうとオウム返しされるはず！
+
+### スクレイピング(データ取得について)
+[生駒市デジタルミュージアム](http://www2.city.ikoma.lg.jp/dm/41ichiran/4105shisetsu/4105shisetsu.php)からデータを取得しています。
+
+データの取得スクリプトについて
+rake taskで取ってくることができます。
+
+```
+ $ rake -T
+ task1...
+ .
+ .
+ $ rake scrayping:get
+```
+
+
 ### testについて
 
 [環境構築](http://qiita.com/yusabana/items/db44b81bdddf6ed0e9f5)
