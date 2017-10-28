@@ -1,25 +1,14 @@
 require 'line/bot'
-<<<<<<< HEAD
 require './src/hint'
 
 require 'dotenv'
 Dotenv.load
-=======
-require 'src/hint'
->>>>>>> da0bf21305c1fecfa9eba21a3cd6857acfa85c9c
 
 def client
   @client ||= Line::Bot::Client.new { |config|
 
     config.channel_secret = "ba34878dd4a81c9b82ec84fe00e00765"
     config.channel_token = "JKoe35FW7SxRSvoWr/HLAlTl4RbBm2fqbuiuaUwXZShKJnKJ6GS+Tte8xt71poYxOlu7YqeURq8LBDv7m1NG5JT2urWiYqc/v5Tksga4c2e45HWKMhAy5NTh8lJKBSl8Z+zF62HKLRfOrpiWRPL6ZwdB04t89/1O/w1cDnyilFU="
-  }
-end
-
-def target()
-  {
-    :latitude => 34.693027,
-    :longitude => 135.6954373
   }
 end
 
@@ -51,7 +40,12 @@ post '/callback' do
         tf = Tempfile.open("content")
         tf.write(response.body)
       when 'location'
-        hint_location()
+        
+        message = {
+          type: 'text',
+          text: hint_location(event.message['latitude'], event.message['longitude'])
+        }
+        client.reply_message(event['replyToken'], message)
       end
     end
   }
