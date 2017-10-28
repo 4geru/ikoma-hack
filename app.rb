@@ -30,18 +30,50 @@ post '/callback' do
       case event.type
       when Line::Bot::Event::MessageType::Text
         msg = Hello.new.message(event.message['text'])
-        message = {
-          type: 'text',
-          text: msg
-        }
-        client.reply_message(event['replyToken'], message)
+        case msg
+        when "探す"
+        client.reply_message(event['replyToken'], make_carousel_template_data)
+        end
       when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
         response = client.get_message_content(event.message['id'])
         tf = Tempfile.open("content")
         tf.write(response.body)
       end
-    end
   }
 
   "OK"
+end
+
+def make_carousel_template_data
+  return message = {
+  "type": "template",
+  "altText": "select mission",
+  "template": {
+      "type": "carousel",
+      "columns": [
+         {
+            "thumbnailImageUrl": http://www2.city.ikoma.lg.jp/dm/12/1206shonotani/120602shonotani/00789.php,
+            "title": "xxx遺跡",
+            "text": "遺跡って響き...いいよね！！",
+            "actions": [
+                {
+                    "type": "postback",
+                    "label": "Buy",
+                    "data": "action=buy&itemid=111"
+                },
+                {
+                    "type": "postback",
+                    "label": "Add to cart",
+                    "data": "action=add&itemid=111"
+                },
+                {
+                    "type": "uri",
+                    "label": "View detail",
+                    "uri": "http://www2.city.ikoma.lg.jp/dm/12/1206shonotani/120602shonotani/120602shonotani.php"
+                }
+            ]
+          }
+      ]
+    }
+  }
 end
