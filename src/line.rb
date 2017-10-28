@@ -42,12 +42,6 @@ post '/callback' do
           #     text: result['secure_url']
           #   }
           # ]
-
-          p client
-
-
-
-
           image = Image.new()
           image.user_id = 1
           image.all_story_id = 1
@@ -69,16 +63,15 @@ post '/callback' do
               text: image.url
             }
           ]
-
-
           client.reply_message(event['replyToken'], message)
+
         when Line::Bot::Event::MessageType::Video
           response = client.get_message_content(event.message['id'])
           tf = Tempfile.open("content")
           tf.write(response.body)
         end
       when Line::Bot::Event::Beacon
-        msg = "クリアです！記念写真を撮ってね！"
+        msg = "クリアです！みんなで記念写真を撮ってね！"
         message = {
           type: 'text',
           text: msg
