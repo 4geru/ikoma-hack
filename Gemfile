@@ -10,6 +10,7 @@ gem 'line-bot-api'
 gem 'nokogiri'
 gem 'mechanize'
 gem 'levenshtein'
+gem 'dotenv'
 # test
 gem "rspec", ">= 3.0.0"
 group :development do

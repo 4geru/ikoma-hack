@@ -1,6 +1,8 @@
 require 'sinatra'
 require 'line/bot'
 require './src/hello'
+require 'dotenv'
+Dotenv.load
 
 # 微小変更部分！確認用。
 get '/' do
@@ -29,7 +31,9 @@ post '/callback' do
     when Line::Bot::Event::Message
       case event.type
       when Line::Bot::Event::MessageType::Text
-        client.reply_message(event['replyToken'], make_carousel_template_data)
+        
+        res = client.reply_message(event['replyToken'], make_carousel_template_data)
+        p res
       when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
         response = client.get_message_content(event.message['id'])
         tf = Tempfile.open("content")
@@ -41,34 +45,38 @@ post '/callback' do
   "OK"
 end
 
-def make_carousel_template_data
-  return message = {
+def make_carousel_template_data()
+{
   "type": "template",
-  "altText": "select mission",
+  "altText": "this is a image carousel template",
   "template": {
-      "type": "carousel",
-      "columns": {
-        "thumbnailImageUrl": "https://wing-auctions.c.yimg.jp/sim?furl=auctions.c.yimg.jp%2Fimages.auctions.yahoo.co.jp%2Fimage%2Fdr000%2Fauc0310%2Fusers%2F3%2F0%2F9%2F2%2Fneutraltakizawa-img640x480-1507701425ktdswi32237.jpg&dc=1&sr.fs=20000",
-        "title": "xxx遺跡",
-        "text": "遺跡って響き...いいよね！！",
-        "actions": [
+      "type": "image_carousel",
+      "columns": [
           {
-            "type": "postback",
-            "label": "Buy",
-            "data": "action=buy&itemid=111"
+            "imageUrl": "https://example.com/bot/images/item1.jpg",
+            "action": {
+              "type": "postback",
+              "label": "Buy",
+              "data": "action=buy&itemid=111"
+            }
           },
           {
-            "type": "postback",
-            "label": "Add to cart",
-            "data": "action=add&itemid=111"
+            "imageUrl": "https://example.com/bot/images/item2.jpg",
+            "action": {
+              "type": "message",
+              "label": "Yes",
+              "text": "yes"
+            }
           },
           {
-            "type": "uri",
-            "label": "View detail",
-            "uri": "http://www2.city.ikoma.lg.jp/dm/12/1206shonotani/120602shonotani/120602shonotani.php"
+            "imageUrl": "https://example.com/bot/images/item3.jpg",
+            "action": {
+              "type": "uri",
+              "label": "View detail",
+              "uri": "http://example.com/page/222"
+            }
           }
-        ]
-      }
-    }
+      ]
   }
+}
 end
