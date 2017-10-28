@@ -12,6 +12,13 @@ def client
   }
 end
 
+def target()
+  {
+    :latitude => 34.693027,
+    :longitude => 135.6954373
+  }
+end
+
 post '/callback' do
   body = request.body.read
 
@@ -24,13 +31,11 @@ post '/callback' do
   events.each { |event|
     case event
     when Line::Bot::Event::Message
-    
       case event.type
       when Line::Bot::Event::MessageType::Text
         if event.message['text'] == 'ヒントをください'
           client.reply_message(event['replyToken'], hint_confirm())
         end
-        # msg = Hello.new.message(event.message['text'])
         puts event.message['text']
         message = {
           type: 'text',
@@ -41,6 +46,8 @@ post '/callback' do
         response = client.get_message_content(event.message['id'])
         tf = Tempfile.open("content")
         tf.write(response.body)
+      when 'location'
+        hint_location()
       end
     end
   }
