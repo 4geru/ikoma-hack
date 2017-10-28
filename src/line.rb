@@ -77,23 +77,29 @@ post '/callback' do
           tf = Tempfile.open("content")
           tf.write(response.body)
         end
-      when Line::Bot::Event::Beacon
-        msg = "クリアです！みんなで記念写真を撮ってね！"
-        message = [
-          {
-            type: 'text',
-            text: msg
-          },
-          {
-            type: "sticker",
-            packageId: "1",
-            stickerId: "136"
-          }
-        ]
+      when 'location'
+        message = {
+          type: 'text',
+          text: hint_location(event.message['latitude'], event.message['longitude'])
+        }
         client.reply_message(event['replyToken'], message)
-
       end
-    }
+    when Line::Bot::Event::Beacon
+      msg = "クリアです！みんなで記念写真を撮ってね！"
+      message = [
+        {
+          type: 'text',
+          text: msg
+        },
+        {
+          type: "sticker",
+          packageId: "1",
+          stickerId: "136"
+        }
+      ]
+      client.reply_message(event['replyToken'], message)
+    end
+  }
 
-    "OK"
-  end
+  "OK"
+end
