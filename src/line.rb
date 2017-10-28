@@ -71,35 +71,33 @@ post '/callback' do
             }
           ]
           client.reply_message(event['replyToken'], message)
-
         when Line::Bot::Event::MessageType::Video
           response = client.get_message_content(event.message['id'])
           tf = Tempfile.open("content")
           tf.write(response.body)
+        when 'location'
+          message = {
+            type: 'text',
+            text: hint_location(event.message['latitude'], event.message['longitude'])
+          }
+          client.reply_message(event['replyToken'], message)
         end
-      when 'location'
-        message = {
-          type: 'text',
-          text: hint_location(event.message['latitude'], event.message['longitude'])
-        }
+      when Line::Bot::Event::Beacon
+        msg = "クリアです！みんなで記念写真を撮ってね！"
+        message = [
+          {
+            type: 'text',
+            text: msg
+          },
+          {
+            type: "sticker",
+            packageId: "1",
+            stickerId: "136"
+          }
+        ]
         client.reply_message(event['replyToken'], message)
       end
-    when Line::Bot::Event::Beacon
-      msg = "クリアです！みんなで記念写真を撮ってね！"
-      message = [
-        {
-          type: 'text',
-          text: msg
-        },
-        {
-          type: "sticker",
-          packageId: "1",
-          stickerId: "136"
-        }
-      ]
-      client.reply_message(event['replyToken'], message)
-    end
-  }
+    }
 
-  "OK"
-end
+    "OK"
+  end
