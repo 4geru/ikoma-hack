@@ -1,0 +1,19 @@
+current directory: /Users/gumio_inf/LINE/ikoma-hack/vendor/bundle/ruby/2.4.0/gems/levenshtein-0.2.2/ext/levenshtein
+/Users/gumio_inf/.anyenv/envs/rbenv/versions/2.4.1/bin/ruby -r ./siteconf20171028-36520-k4pjf8.rb extconf.rb
+checking for -llevenshtein_array... no
+checking for -llevenshtein_array_of_strings... no
+checking for -llevenshtein_generic... no
+checking for -llevenshtein_string... no
+creating Makefile
+
+current directory: /Users/gumio_inf/LINE/ikoma-hack/vendor/bundle/ruby/2.4.0/gems/levenshtein-0.2.2/ext/levenshtein
+make "DESTDIR=" clean
+
+current directory: /Users/gumio_inf/LINE/ikoma-hack/vendor/bundle/ruby/2.4.0/gems/levenshtein-0.2.2/ext/levenshtein
+make "DESTDIR="
+compiling levenshtein_fast.c
+linking shared-object levenshtein/levenshtein_fast.bundle
+
+current directory: /Users/gumio_inf/LINE/ikoma-hack/vendor/bundle/ruby/2.4.0/gems/levenshtein-0.2.2/ext/levenshtein
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 levenshtein_fast.bundle ./.gem.20171028-36520-xuh0b8/levenshtein
