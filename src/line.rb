@@ -1,5 +1,6 @@
 require 'line/bot'
 require './src/hint'
+require './src/start'
 
 require 'dotenv'
 Dotenv.load
@@ -28,6 +29,16 @@ post '/callback' do
       when Line::Bot::Event::MessageType::Text
         if event.message['text'] == 'ヒントをください'
           client.reply_message(event['replyToken'], hint_confirm())
+        elsif event.message['text'] == 'ゲームスタート'
+          data = make_carousel_template_data([
+              AllStory.find(1),
+              AllStory.find(2),
+              AllStory.find(3),
+              AllStory.find(4),
+              AllStory.find(5)
+            ])
+            p data
+          client.reply_message(event['replyToken'], data)
         end
         msg = Hello.new.message(event.message['text'])
         message = {

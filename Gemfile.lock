@@ -111,8 +111,8 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
-  dotenv
   cloudinary
+  dotenv
   levenshtein
   line-bot-api
   mechanize
