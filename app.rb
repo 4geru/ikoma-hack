@@ -48,7 +48,7 @@ def make_carousel_template_data
   "template": {
       "type": "carousel",
       "columns": {
-        "thumbnailImageUrl": http://www2.city.ikoma.lg.jp/dm/12/1206shonotani/120602shonotani/00789.php,
+        "thumbnailImageUrl": "https://wing-auctions.c.yimg.jp/sim?furl=auctions.c.yimg.jp%2Fimages.auctions.yahoo.co.jp%2Fimage%2Fdr000%2Fauc0310%2Fusers%2F3%2F0%2F9%2F2%2Fneutraltakizawa-img640x480-1507701425ktdswi32237.jpg&dc=1&sr.fs=20000",
         "title": "xxx遺跡",
         "text": "遺跡って響き...いいよね！！",
         "actions": [
