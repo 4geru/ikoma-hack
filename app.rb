@@ -4,7 +4,7 @@ require './src/hello'
 
 # 微小変更部分！確認用。
 get '/' do
-  "Hello world"
+  "test"
 end
 
 def client
