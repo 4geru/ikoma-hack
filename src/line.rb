@@ -9,6 +9,7 @@ def client
 
     config.channel_secret = ENV['CHANNEL_SECRET']
     config.channel_token = ENV['CHANNEL_ACCESS_TOKEN']
+  }
 end
 
 post '/callback' do
