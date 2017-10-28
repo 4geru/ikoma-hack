@@ -6,7 +6,6 @@ Dotenv.load
 
 def client
   @client ||= Line::Bot::Client.new { |config|
-
     config.channel_secret = ENV['CHANNEL_SECRET']
     config.channel_token = ENV['CHANNEL_ACCESS_TOKEN']
   }
@@ -14,12 +13,10 @@ end
 
 post '/callback' do
   body = request.body.read
-
   signature = request.env['HTTP_X_LINE_SIGNATURE']
   unless client.validate_signature(body, signature)
     error 400 do 'Bad Request' end
     end
-
     events = client.parse_events_from(body)
     events.each { |event|
       case event
@@ -83,20 +80,20 @@ post '/callback' do
           }
           client.reply_message(event['replyToken'], message)
         end
-      # when Line::Bot::Event::Beacon
-      #   msg = "クリアです！みんなで記念写真を撮ってね！"
-      #   message = [
-      #     {
-      #       type: 'text',
-      #       text: msg
-      #     },
-      #     {
-      #       type: "sticker",
-      #       packageId: "1",
-      #       stickerId: "136"
-      #     }
-      #   ]
-      #   client.reply_message(event['replyToken'], message)
+      when Line::Bot::Event::Beacon
+        msg = "クリアです！みんなで記念写真を撮ってね！"
+        message = [
+          {
+            type: 'text',
+            text: msg
+          },
+          {
+            type: "sticker",
+            packageId: "1",
+            stickerId: "136"
+          }
+        ]
+        client.reply_message(event['replyToken'], message)
       end
     }
 
