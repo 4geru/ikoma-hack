@@ -1,3 +1,11 @@
 ---
+<<<<<<< HEAD
 BUNDLE_PATH: "vendor/bundle"
 BUNDLE_DISABLE_SHARED_GEMS: "true"
+=======
+BUNDLE_DISABLE_SHARED_GEMS: "true"
+BUNDLE_BIN: "vendor/bundle/bin"
+BUNDLE_JOBS: "4"
+BUNDLE_WITHOUT: "development:test"
+BUNDLE_PATH: "vendor/bundle"
+>>>>>>> 601bbbf3c4898543e8341e57e50139fd5bfa2866
