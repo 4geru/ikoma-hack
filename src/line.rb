@@ -28,7 +28,22 @@ post '/callback' do
           text: msg
         }
         client.reply_message(event['replyToken'], message)
-      when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
+      when Line::Bot::Event::MessageType::Image
+        response = client.get_message_content(event.message['id'])
+
+        # Need Config Var 'CLOUDINARY_URL' with format (API Key):(API Secret)@(Cloud name)
+        image = MiniMagick::Image.read(response.body)
+        imageName = SecureRandom.uuid
+        image.write("tmp/#{imageName}.jpg")
+        result = Cloudinary::Uploader.upload("tmp/#{imageName}.jpg")
+        message = [
+          {
+            type: 'text',
+            text: result['secure_url']
+          }
+        ]
+        client.reply_message(event['replyToken'], message)
+      when Line::Bot::Event::MessageType::Video
         response = client.get_message_content(event.message['id'])
         tf = Tempfile.open("content")
         tf.write(response.body)
