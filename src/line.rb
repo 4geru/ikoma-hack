@@ -63,10 +63,6 @@ post '/callback' do
               type: "sticker",
               packageId: "407",
               stickerId: "1"
-            },
-            {
-              type: "text",
-              text: image.url
             }
           ]
 
