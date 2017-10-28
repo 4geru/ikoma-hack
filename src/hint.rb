@@ -22,7 +22,7 @@ def hint_confirm()
 end
 # :latitude => 34.693027,
 # :longitude => 135.6954373
-def hint_location(latitude, longitude)
+def hint_location(latitude, longitude, answer_id)
   
 end
 

@@ -1,8 +1,12 @@
 require 'line/bot'
+<<<<<<< HEAD
 require './src/hint'
 
 require 'dotenv'
 Dotenv.load
+=======
+require 'src/hint'
+>>>>>>> da0bf21305c1fecfa9eba21a3cd6857acfa85c9c
 
 def client
   @client ||= Line::Bot::Client.new { |config|
@@ -36,7 +40,7 @@ post '/callback' do
         if event.message['text'] == 'ヒントをください'
           client.reply_message(event['replyToken'], hint_confirm())
         end
-        puts event.message['text']
+        msg = Hello.new.message(event.message['text'])
         message = {
           type: 'text',
           text: event.message['text']
