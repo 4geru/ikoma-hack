@@ -6,8 +6,6 @@ gem 'sinatra'
 gem 'sinatra-contrib'
 gem "activerecord"
 gem 'sinatra-activerecord'
-gem 'activerecord'
-gem 'sinatra-activerecord'
 gem 'line-bot-api'
 gem 'nokogiri'
 gem 'mechanize'
