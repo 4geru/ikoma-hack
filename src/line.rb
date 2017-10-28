@@ -17,6 +17,7 @@ post '/callback' do
   unless client.validate_signature(body, signature)
     error 400 do 'Bad Request' end
     end
+  end
     events = client.parse_events_from(body)
     events.each { |event|
       case event
