@@ -1,7 +1,10 @@
-require 'bundler/setup'
-Bundler.require
-require './src/hello'
+require 'sinatra'
+require 'line/bot'
+require 'sinatra/activerecord'
+# require 'sinatra/activerecord/rake'
 require './models'
-require './src/web'
+require './src/hello'
 require './src/line'
-# 微小変更部分！確認用。
+require './src/web'
+require 'dotenv'
+Dotenv.load

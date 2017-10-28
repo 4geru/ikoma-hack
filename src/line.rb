@@ -1,13 +1,17 @@
 require 'line/bot'
 require './src/hint'
+require './src/start'
+require './src/give_up'
 
 require 'dotenv'
 Dotenv.load
+require 'mini_magick'
+require 'cloudinary'
 
 def client
   @client ||= Line::Bot::Client.new { |config|
-    config.channel_secret = ENV['CHANNEL_SECRET']
-    config.channel_token = ENV['CHANNEL_ACCESS_TOKEN']
+    config.channel_secret = ENV['LINE_CHANNEL_SECRET']
+    config.channel_token = ENV['LINE_CHANNEL_TOKEN']
   }
 end
 
@@ -21,12 +25,25 @@ post '/callback' do
 
   events = client.parse_events_from(body)
   events.each { |event|
+    p event
     case event
     when Line::Bot::Event::Message
       case event.type
       when Line::Bot::Event::MessageType::Text
         if event.message['text'] == 'ヒントをください'
           client.reply_message(event['replyToken'], hint_confirm())
+        elsif event.message['text'] == 'ゲームスタート'
+          data = make_carousel_template_data([
+              AllStory.find(1),
+              AllStory.find(2),
+              AllStory.find(3),
+              AllStory.find(4),
+              AllStory.find(5)
+            ])
+            p data
+          client.reply_message(event['replyToken'], data)
+        elsif event.message['text'] == 'ギブアップ'
+          client.reply_message(event['replyToken'], give_up_confirm())
         end
         msg = Hello.new.message(event.message['text'])
         message = {
@@ -40,8 +57,8 @@ post '/callback' do
         # Need Config Var 'CLOUDINARY_URL' with format (API Key):(API Secret)@(Cloud name)
         image = MiniMagick::Image.read(response.body)
         imageName = SecureRandom.uuid
-        image.write("tmp/#{imageName}.jpg")
-        result = Cloudinary::Uploader.upload("tmp/#{imageName}.jpg")
+        image.write("/tmp/#{imageName}.jpg")
+        result = Cloudinary::Uploader.upload("/tmp/#{imageName}.jpg")
         # message = [
         #   {
         #     type: 'text',
@@ -96,6 +113,29 @@ post '/callback' do
         }
       ]
       client.reply_message(event['replyToken'], message)
+    when Line::Bot::Event::Postback
+      data =  URI::decode_www_form(event['postback']['data']).to_h
+      p data
+      case data['action']
+      when 'start'
+        message = {
+          type: 'text',
+          text: "楽しい冒険が始まるよ！頑張ってね！"
+        }
+        client.reply_message(event['replyToken'], message)
+      when 'giveup'
+        message = {
+          type: 'text',
+          text: "えぇー？本当に？"
+        }
+        client.reply_message(event['replyToken'], [message, final_give_up_confirm()])
+      when 'finalgiveup'
+        message = {
+          type: 'text',
+          text: "お疲れ様！また頑張ってね！"
+        }
+        client.reply_message(event['replyToken'], message)
+      end
     end
   }
 
