@@ -1,6 +1,7 @@
 require 'line/bot'
 require './src/hint'
 require './src/start'
+require './src/give_up'
 
 require 'dotenv'
 Dotenv.load
@@ -8,8 +9,8 @@ Dotenv.load
 def client
   @client ||= Line::Bot::Client.new { |config|
 
-    config.channel_secret = "ba34878dd4a81c9b82ec84fe00e00765"
-    config.channel_token = "JKoe35FW7SxRSvoWr/HLAlTl4RbBm2fqbuiuaUwXZShKJnKJ6GS+Tte8xt71poYxOlu7YqeURq8LBDv7m1NG5JT2urWiYqc/v5Tksga4c2e45HWKMhAy5NTh8lJKBSl8Z+zF62HKLRfOrpiWRPL6ZwdB04t89/1O/w1cDnyilFU="
+    config.channel_secret = ENV['LINE_CHANNEL_SECRET']
+    config.channel_token = ENV['LINE_CHANNEL_TOKEN']
   }
 end
 
@@ -23,6 +24,7 @@ post '/callback' do
 
   events = client.parse_events_from(body)
   events.each { |event|
+    p event
     case event
     when Line::Bot::Event::Message
       case event.type
@@ -39,6 +41,8 @@ post '/callback' do
             ])
             p data
           client.reply_message(event['replyToken'], data)
+        elsif event.message['text'] == 'ギブアップ'
+          client.reply_message(event['replyToken'], give_up_confirm())
         end
         msg = Hello.new.message(event.message['text'])
         message = {
@@ -80,6 +84,24 @@ post '/callback' do
       text: msg
     }
     client.reply_message(event['replyToken'], message)
+    
+    when Line::Bot::Event::Postback
+      data =  URI::decode_www_form(event['postback']['data']).to_h
+      p data
+      case data['action']
+      when 'giveup'
+        message = {
+          type: 'text',
+          text: "えぇー？本当に？"
+        }
+        client.reply_message(event['replyToken'], [message, final_give_up_confirm()])
+      when 'finalgiveup'
+        message = {
+          type: 'text',
+          text: "お疲れ様！また頑張ってね！"
+        }
+        client.reply_message(event['replyToken'], message)
+      end
     end
   }
 
