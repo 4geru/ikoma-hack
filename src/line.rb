@@ -34,7 +34,7 @@ post '/callback' do
         tf.write(response.body)
       end
     when Line::Bot::Event::Beacon
-    msg = "Beacon!!!"
+    msg = "クリアです！記念写真を撮ってね！"
     message = {
       type: 'text',
       text: msg
