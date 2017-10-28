@@ -48,11 +48,11 @@ post '/callback' do
 
 
 
-          # image = Image.new()
-          # image.user_id =
-          # image.all_story_id = 1
-          # image.url = result['secure_url']
-          # image.save
+          image = Image.new()
+          image.user_id = 1
+          image.all_story_id = 1
+          image.url = result['secure_url']
+          image.save
 
           message = [
             {
@@ -61,8 +61,12 @@ post '/callback' do
             },
             {
               type: "sticker",
-              packageId: "1",
+              packageId: "407",
               stickerId: "1"
+            },
+            {
+              type: "text",
+              text: image.url
             }
           ]
 
