@@ -1,4 +1,5 @@
 require 'line/bot'
+require 'src/hint'
 
 def client
   @client ||= Line::Bot::Client.new { |config|
@@ -22,6 +23,9 @@ post '/callback' do
     when Line::Bot::Event::Message
       case event.type
       when Line::Bot::Event::MessageType::Text
+        if event.message['text'] == 'ヒントをください'
+          client.reply_message(event['replyToken'], hint_confirm())
+        end
         msg = Hello.new.message(event.message['text'])
         message = {
           type: 'text',
