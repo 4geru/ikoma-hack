@@ -12,7 +12,7 @@ def make_carousel_template_data(places)
             "actions": [
                 {
                     "type": "postback",
-                    "label": "探索を始める！",
+                    "label": "冒険を始める！",
                     "data": "action=start&place_id=#{places[0].id}"
                 },
             ]
@@ -24,7 +24,7 @@ def make_carousel_template_data(places)
             "actions": [
                 {
                     "type": "postback",
-                    "label": "探索を始める！",
+                    "label": "冒険を始める！",
                     "data": "action=start&place_id=#{places[1].id}"
                 },
             ]
@@ -36,7 +36,7 @@ def make_carousel_template_data(places)
             "actions": [
                 {
                     "type": "postback",
-                    "label": "探索を始める！",
+                    "label": "冒険を始める！",
                     "data": "action=start&place_id=#{places[2].id}"
                 },
             ]
@@ -48,7 +48,7 @@ def make_carousel_template_data(places)
             "actions": [
                 {
                     "type": "postback",
-                    "label": "探索を始める！",
+                    "label": "冒険を始める！",
                     "data": "action=start&place_id=#{places[3].id}"
                 },
             ]
@@ -60,7 +60,7 @@ def make_carousel_template_data(places)
             "actions": [
                 {
                     "type": "postback",
-                    "label": "探索を始める！",
+                    "label": "冒険を始める！",
                     "data": "action=start&place_id=#{places[4].id}"
                 },
             ]

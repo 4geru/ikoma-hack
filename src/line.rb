@@ -89,6 +89,12 @@ post '/callback' do
       data =  URI::decode_www_form(event['postback']['data']).to_h
       p data
       case data['action']
+      when 'start'
+        message = {
+          type: 'text',
+          text: "楽しい冒険が始まるよ！頑張ってね！"
+        }
+        client.reply_message(event['replyToken'], message)
       when 'giveup'
         message = {
           type: 'text',
