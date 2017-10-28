@@ -51,23 +51,11 @@ def make_carousel_template_data
         "thumbnailImageUrl": "https://wing-auctions.c.yimg.jp/sim?furl=auctions.c.yimg.jp%2Fimages.auctions.yahoo.co.jp%2Fimage%2Fdr000%2Fauc0310%2Fusers%2F3%2F0%2F9%2F2%2Fneutraltakizawa-img640x480-1507701425ktdswi32237.jpg&dc=1&sr.fs=20000",
         "title": "xxx遺跡",
         "text": "遺跡って響き...いいよね！！",
-        "actions": [
-          {
-            "type": "postback",
-            "label": "Buy",
-            "data": "action=buy&itemid=111"
-          },
-          {
-            "type": "postback",
-            "label": "Add to cart",
-            "data": "action=add&itemid=111"
-          },
-          {
-            "type": "uri",
-            "label": "View detail",
-            "uri": "http://www2.city.ikoma.lg.jp/dm/12/1206shonotani/120602shonotani/120602shonotani.php"
-          }
-        ]
+        "actions": {
+          "type": "uri",
+          "label": "View detail",
+          "uri": "http://www2.city.ikoma.lg.jp/dm/12/1206shonotani/120602shonotani/120602shonotani.php"
+        }
       }
     }
   }
