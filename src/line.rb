@@ -51,12 +51,12 @@ post '/callback' do
           message = [
             {
               type: 'text',
-              text: "クリアです！！おめでとう！！"
+              text: "アルバムに画像を保存しました！！おめでとう！！"
             },
             {
               type: "sticker",
               packageId: "1",
-              stickerId: "1"
+              stickerId: "407"
             },
             {
               type: 'text',
@@ -72,10 +72,17 @@ post '/callback' do
         end
       when Line::Bot::Event::Beacon
         msg = "クリアです！みんなで記念写真を撮ってね！"
-        message = {
-          type: 'text',
-          text: msg
-        }
+        message = [
+          {
+            type: 'text',
+            text: msg
+          },
+          {
+            type: "sticker",
+            packageId: "1",
+            stickerId: "136"
+          }
+        ]
         client.reply_message(event['replyToken'], message)
       end
     }
