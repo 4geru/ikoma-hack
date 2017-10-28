@@ -55,7 +55,7 @@ post '/callback' do
         tf = Tempfile.open("content")
         tf.write(response.body)
       when 'location'
-        
+
         message = {
           type: 'text',
           text: hint_location(event.message['latitude'], event.message['longitude'])
