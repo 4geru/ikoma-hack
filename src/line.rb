@@ -7,9 +7,8 @@ Dotenv.load
 def client
   @client ||= Line::Bot::Client.new { |config|
 
-    config.channel_secret = "ba34878dd4a81c9b82ec84fe00e00765"
-    config.channel_token = "JKoe35FW7SxRSvoWr/HLAlTl4RbBm2fqbuiuaUwXZShKJnKJ6GS+Tte8xt71poYxOlu7YqeURq8LBDv7m1NG5JT2urWiYqc/v5Tksga4c2e45HWKMhAy5NTh8lJKBSl8Z+zF62HKLRfOrpiWRPL6ZwdB04t89/1O/w1cDnyilFU="
-  }
+    config.channel_secret = ENV['CHANNEL_SECRET']
+    config.channel_token = ENV['CHANNEL_ACCESS_TOKEN']
 end
 
 post '/callback' do
