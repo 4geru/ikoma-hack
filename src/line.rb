@@ -33,6 +33,13 @@ post '/callback' do
         tf = Tempfile.open("content")
         tf.write(response.body)
       end
+    when Line::Bot::Event::Beacon
+    msg = "Beacon!!!"
+    message = {
+      type: 'text',
+      text: msg
+    }
+    client.reply_message(event['replyToken'], message)
     end
   }
 
