@@ -30,7 +30,22 @@ post '/callback' do
     when Line::Bot::Event::Message
       case event.type
       when Line::Bot::Event::MessageType::Text
-        if event.message['text'] == 'ヒントをください'
+        if event.message['text'] == 'ビーコン'
+      
+      msg = "クリアです！みんなで記念写真を撮ってね！"
+      message = [
+        {
+          type: 'text',
+          text: msg
+        },
+        {
+          type: "sticker",
+          packageId: "1",
+          stickerId: "136"
+        }
+      ]
+      client.reply_message(event['replyToken'], message)
+        elsif event.message['text'] == 'ヒントをください'
           client.reply_message(event['replyToken'], hint_confirm())
         elsif event.message['text'] == 'ゲームスタート'
           data = make_carousel_template_data([
