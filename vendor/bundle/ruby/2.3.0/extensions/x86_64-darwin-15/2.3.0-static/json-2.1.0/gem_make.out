@@ -1,0 +1,13 @@
+current directory: /Users/apple/Documents/develop/ikoma-hack/vendor/bundle/ruby/2.3.0/gems/json-2.1.0/ext/json
+/Users/apple/.rbenv/versions/2.3.1/bin/ruby -r ./siteconf20171028-93385-4b6kff.rb extconf.rb
+creating Makefile
+
+current directory: /Users/apple/Documents/develop/ikoma-hack/vendor/bundle/ruby/2.3.0/gems/json-2.1.0/ext/json
+make "DESTDIR=" clean
+
+current directory: /Users/apple/Documents/develop/ikoma-hack/vendor/bundle/ruby/2.3.0/gems/json-2.1.0/ext/json
+make "DESTDIR="
+make: Nothing to be done for `all'.
+
+current directory: /Users/apple/Documents/develop/ikoma-hack/vendor/bundle/ruby/2.3.0/gems/json-2.1.0/ext/json
+make "DESTDIR=" install
