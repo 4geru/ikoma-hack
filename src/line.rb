@@ -61,7 +61,7 @@ post '/callback' do
             },
             {
               type: "sticker",
-              packageId: "407",
+              packageId: "1",
               stickerId: "1"
             }
           ]
