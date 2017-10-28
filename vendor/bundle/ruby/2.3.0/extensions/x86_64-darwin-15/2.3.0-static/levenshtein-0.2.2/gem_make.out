@@ -1,0 +1,23 @@
+current directory: /Users/apple/Documents/develop/ikoma-hack/vendor/bundle/ruby/2.3.0/gems/levenshtein-0.2.2/ext/levenshtein
+/Users/apple/.rbenv/versions/2.3.1/bin/ruby -r ./siteconf20171028-93385-1uoc6s0.rb extconf.rb
+checking for main() in -llevenshtein_array... no
+checking for main() in -llevenshtein_array_of_strings... no
+checking for main() in -llevenshtein_generic... no
+checking for main() in -llevenshtein_string... no
+creating Makefile
+
+To see why this extension failed to compile, please check the mkmf.log which can be found here:
+
+  /Users/apple/Documents/develop/ikoma-hack/vendor/bundle/ruby/2.3.0/extensions/x86_64-darwin-15/2.3.0-static/levenshtein-0.2.2/mkmf.log
+
+current directory: /Users/apple/Documents/develop/ikoma-hack/vendor/bundle/ruby/2.3.0/gems/levenshtein-0.2.2/ext/levenshtein
+make "DESTDIR=" clean
+
+current directory: /Users/apple/Documents/develop/ikoma-hack/vendor/bundle/ruby/2.3.0/gems/levenshtein-0.2.2/ext/levenshtein
+make "DESTDIR="
+compiling levenshtein_fast.c
+linking shared-object levenshtein/levenshtein_fast.bundle
+
+current directory: /Users/apple/Documents/develop/ikoma-hack/vendor/bundle/ruby/2.3.0/gems/levenshtein-0.2.2/ext/levenshtein
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 levenshtein_fast.bundle ./.gem.20171028-93385-ctv1vi/levenshtein

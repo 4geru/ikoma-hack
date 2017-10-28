@@ -52,4 +52,10 @@ $ rake db:create_migration NAME=create_DB_NAME_
 $ rake db:migrate
 ```
 
+### Cloudinaryについて
+
+```
+$ heroku addons:add cloudinary
+```
+
 [参照](http://qiita.com/myokkie/items/b6b68b247ec7a110a1c4)# ikoma-hack
