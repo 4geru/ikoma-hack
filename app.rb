@@ -31,7 +31,7 @@ post '/callback' do
       when Line::Bot::Event::MessageType::Text
         msg = Hello.new.message(event.message['text'])
         case msg
-        when "探す"
+        when "さがす"
         client.reply_message(event['replyToken'], make_carousel_template_data)
         end
       when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
