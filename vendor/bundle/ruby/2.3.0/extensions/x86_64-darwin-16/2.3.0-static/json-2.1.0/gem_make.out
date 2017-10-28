@@ -1,0 +1,13 @@
+current directory: /Users/gumio_inf/LINE/ikoma-hack/vendor/bundle/ruby/2.3.0/gems/json-2.1.0/ext/json
+/Users/gumio_inf/.anyenv/envs/rbenv/versions/2.3.4/bin/ruby -r ./siteconf20171028-50373-shdxik.rb extconf.rb
+creating Makefile
+
+current directory: /Users/gumio_inf/LINE/ikoma-hack/vendor/bundle/ruby/2.3.0/gems/json-2.1.0/ext/json
+make "DESTDIR=" clean
+
+current directory: /Users/gumio_inf/LINE/ikoma-hack/vendor/bundle/ruby/2.3.0/gems/json-2.1.0/ext/json
+make "DESTDIR="
+make: Nothing to be done for `all'.
+
+current directory: /Users/gumio_inf/LINE/ikoma-hack/vendor/bundle/ruby/2.3.0/gems/json-2.1.0/ext/json
+make "DESTDIR=" install
