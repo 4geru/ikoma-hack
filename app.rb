@@ -50,30 +50,28 @@ def make_carousel_template_data
   "altText": "select mission",
   "template": {
       "type": "carousel",
-      "columns": [
-         {
-            "thumbnailImageUrl": http://www2.city.ikoma.lg.jp/dm/12/1206shonotani/120602shonotani/00789.php,
-            "title": "xxx遺跡",
-            "text": "遺跡って響き...いいよね！！",
-            "actions": [
-                {
-                    "type": "postback",
-                    "label": "Buy",
-                    "data": "action=buy&itemid=111"
-                },
-                {
-                    "type": "postback",
-                    "label": "Add to cart",
-                    "data": "action=add&itemid=111"
-                },
-                {
-                    "type": "uri",
-                    "label": "View detail",
-                    "uri": "http://www2.city.ikoma.lg.jp/dm/12/1206shonotani/120602shonotani/120602shonotani.php"
-                }
-            ]
+      "columns": {
+        "thumbnailImageUrl": http://www2.city.ikoma.lg.jp/dm/12/1206shonotani/120602shonotani/00789.php,
+        "title": "xxx遺跡",
+        "text": "遺跡って響き...いいよね！！",
+        "actions": [
+          {
+            "type": "postback",
+            "label": "Buy",
+            "data": "action=buy&itemid=111"
+          },
+          {
+            "type": "postback",
+            "label": "Add to cart",
+            "data": "action=add&itemid=111"
+          },
+          {
+            "type": "uri",
+            "label": "View detail",
+            "uri": "http://www2.city.ikoma.lg.jp/dm/12/1206shonotani/120602shonotani/120602shonotani.php"
           }
-      ]
+        ]
+      }
     }
   }
 end
