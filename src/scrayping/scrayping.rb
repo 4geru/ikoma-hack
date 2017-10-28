@@ -27,13 +27,13 @@ class Scrayping
     
     # 改行文字の変換
     detail.gsub!('\\r\\r', '<br />')
-    puts detail
     data = {
       :url => @url,
       :title => title,
       :img => img_url,
       :detail => detail
     }
+    data
   end
 end
 # sample code
