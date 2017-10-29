@@ -72,8 +72,8 @@ post '/callback' do
         # Need Config Var 'CLOUDINARY_URL' with format (API Key):(API Secret)@(Cloud name)
         image = MiniMagick::Image.read(response.body)
         imageName = SecureRandom.uuid
-        image.write("/tmp/#{imageName}.jpg")
-        result = Cloudinary::Uploader.upload("/tmp/#{imageName}.jpg")
+        image.write("tmp/#{imageName}.jpg")
+        result = Cloudinary::Uploader.upload("tmp/#{imageName}.jpg")
         # message = [
         #   {
         #     type: 'text',
