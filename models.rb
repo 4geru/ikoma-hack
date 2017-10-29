@@ -7,6 +7,6 @@ class SelfStory < ActiveRecord::Base
 
 end
 
-class Image < ActiveRecord::Base
+class Photo < ActiveRecord::Base
 
 end

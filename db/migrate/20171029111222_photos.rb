@@ -1,11 +1,10 @@
-class Images < ActiveRecord::Migration
+class Photos < ActiveRecord::Migration
   def change
-    create_table :images do |t|
+     create_table :photos do |t|
       t.integer :user_id
       t.integer :all_story_id
       t.string  :url
-      t.timestamps :null
+      t.timestamps null: false
     end
-
   end
 end

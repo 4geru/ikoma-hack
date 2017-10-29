@@ -69,22 +69,15 @@ post '/callback' do
       when Line::Bot::Event::MessageType::Image
         response = client.get_message_content(event.message['id'])
 
-        # Need Config Var 'CLOUDINARY_URL' with format (API Key):(API Secret)@(Cloud name)
         image = MiniMagick::Image.read(response.body)
         imageName = SecureRandom.uuid
         image.write("tmp/#{imageName}.jpg")
         result = Cloudinary::Uploader.upload("tmp/#{imageName}.jpg")
-        # message = [
-        #   {
-        #     type: 'text',
-        #     text: result['secure_url']
-        #   }
-        # ]
-        image = Image.new()
-        image.user_id = 1
-        image.all_story_id = 1
-        image.url = result['secure_url']
-        image.save
+        image = Photo.create({
+          user_id: 1,
+          all_story_id: 1,
+          url: result['secure_url']
+        })
 
         message = [
           {
