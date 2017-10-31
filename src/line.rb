@@ -25,7 +25,7 @@ post '/callback' do
 
   events = client.parse_events_from(body)
   events.each { |event|
-    p event
+    User.create({user_id: event["source"]["userId"]})
     case event
     when Line::Bot::Event::Message
       case event.type
@@ -73,8 +73,9 @@ post '/callback' do
         imageName = SecureRandom.uuid
         image.write("tmp/#{imageName}.jpg")
         result = Cloudinary::Uploader.upload("tmp/#{imageName}.jpg")
+        user = User.where({user_id: event["source"]["userId"]}).first
         image = Photo.create({
-          user_id: 1,
+          user_id: user.id,
           all_story_id: 1,
           url: result['secure_url']
         })
