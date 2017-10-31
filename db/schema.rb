@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171029111222) do
+ActiveRecord::Schema.define(version: 20171031145416) do
 
   create_table "all_stories", force: :cascade do |t|
     t.integer "beacon_id"
@@ -38,6 +38,12 @@ ActiveRecord::Schema.define(version: 20171029111222) do
     t.string "detail"
     t.float  "lat"
     t.float  "lng"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
