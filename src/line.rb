@@ -30,7 +30,7 @@ post '/callback' do
     when Line::Bot::Event::Message
       case event.type
       when Line::Bot::Event::MessageType::Text
-        if event.message['text'] == 'ビーコン！'
+        if event.message['text'] == 'ビーコン'
 
       msg = "クリアです！みんなで記念写真を撮ってね！"
       message = [
