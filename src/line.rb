@@ -31,7 +31,7 @@ post '/callback' do
       case event.type
       when Line::Bot::Event::MessageType::Text
         if event.message['text'] == 'ビーコン'
-      
+
       msg = "クリアです！みんなで記念写真を撮ってね！"
       message = [
         {
@@ -44,6 +44,7 @@ post '/callback' do
           stickerId: "136"
         }
       ]
+      
       client.reply_message(event['replyToken'], message)
         elsif event.message['text'] == 'ヒントをください'
           client.reply_message(event['replyToken'], hint_confirm())
