@@ -5,5 +5,7 @@ get '/' do
 end
 
 get '/map' do
+  @story = AllStory.first
+  @photos = Photo.first
   erb :map
 end
