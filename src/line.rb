@@ -29,6 +29,7 @@ post '/callback' do
   events.each { |event|
     p event
     case event
+
     when Line::Bot::Event::Message
       case event.type
       when Line::Bot::Event::MessageType::Text
@@ -70,6 +71,7 @@ post '/callback' do
             ])
             p data
           client.reply_message(event['replyToken'], data)
+
         elsif event.message['text'] == 'ギブアップ'
           client.reply_message(event['replyToken'], give_up_confirm())
         end
@@ -79,6 +81,7 @@ post '/callback' do
           text: event.message['text']
         }
         client.reply_message(event['replyToken'], message)
+
       when Line::Bot::Event::MessageType::Image
         response = client.get_message_content(event.message['id'])
 
@@ -109,17 +112,20 @@ post '/callback' do
         ]
 
         client.reply_message(event['replyToken'], message)
+
       when Line::Bot::Event::MessageType::Video
         response = client.get_message_content(event.message['id'])
         tf = Tempfile.open("content")
         tf.write(response.body)
+
       when 'location'
         message = {
           type: 'text',
-          text: hint_location(event.message['latitude'], event.message['longitude'])
+          text: hint_location(event.message['latitude'], event.message['longitude'], goal_lat, goal_lng)
         }
         client.reply_message(event['replyToken'], message)
       end
+
     when Line::Bot::Event::Beacon
       msg = "クリアです！みんなで記念写真を撮ってね！"
       message = [
