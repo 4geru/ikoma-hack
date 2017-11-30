@@ -49,13 +49,13 @@ post '/callback' do
           client.reply_message(event['replyToken'], hint_confirm())
         elsif event.message['text'] == 'ゲームスタート'
           rand_num = (0..50).to_a.sample(5)
-          
+
           data = make_carousel_template_data([
-              AllStory.find(rand_num[0].to-i),
-              AllStory.find(rand_num[1].to-i),
-              AllStory.find(rand_num[2].to-i),
-              AllStory.find(rand_num[3].to-i),
-              AllStory.find(rand_num[4].to-i)
+              AllStory.find(rand_num[0].to_i),
+              AllStory.find(rand_num[1].to_i),
+              AllStory.find(rand_num[2].to_i),
+              AllStory.find(rand_num[3].to_i),
+              AllStory.find(rand_num[4].to_i)
             ])
             p data
           client.reply_message(event['replyToken'], data)
