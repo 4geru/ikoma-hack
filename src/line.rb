@@ -48,7 +48,7 @@ post '/callback' do
         elsif event.message['text'] == 'ヒントをください'
           client.reply_message(event['replyToken'], hint_confirm())
         elsif event.message['text'] == 'ゲームスタート'
-          rand_ids = AllStory.where("lat is ?", nil).ids
+          rand_ids = AllStory.where("lat is not ?", nil).ids
           puts rand_ids
           rand_num = (0..50).to_a.sample(5)
 
