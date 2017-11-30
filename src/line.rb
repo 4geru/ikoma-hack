@@ -130,7 +130,7 @@ post '/callback' do
         },
         {
           type: 'text',
-          text: "idは" + "1" + "です！"
+          text: "idは" + event.beacon['hwid'] + "です！"
         }
       ]
       client.reply_message(event['replyToken'], message)
