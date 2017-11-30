@@ -16,8 +16,8 @@ def client
 end
 
 post '/callback' do
-  @goal_lat = 34.724944
-  @goal_lng = 135.723749
+  $goal_lat = 34.724944
+  $goal_lng = 135.723749
   body = request.body.read
   signature = request.env['HTTP_X_LINE_SIGNATURE']
   unless client.validate_signature(body, signature)
@@ -70,8 +70,8 @@ post '/callback' do
               goal[4]
             ])
             p data
-            @goal_lat = goal[0].lat
-            @goal_lng = goal[0].lng
+            $goal_lat = goal[0].lat
+            $goal_lng = goal[0].lng
           client.reply_message(event['replyToken'], data)
 
         elsif event.message['text'] == 'ギブアップ'
@@ -122,7 +122,7 @@ post '/callback' do
       when 'location'
         message = {
           type: 'text',
-          text: hint_location(event.message['latitude'], event.message['longitude'], @goal_lat, @goal_lng)
+          text: hint_location(event.message['latitude'], event.message['longitude'], $goal_lat, $goal_lng)
         }
         client.reply_message(event['replyToken'], message)
       end
@@ -150,8 +150,8 @@ post '/callback' do
       p data
       case data['action']
       when 'start'
-        @goal_lat = 35
-        @goal_lng = 140
+        $goal_lat = 35
+        $goal_lng = 140
         message = {
           type: 'text',
           text: "楽しい冒険が始まるよ！頑張ってね！"
