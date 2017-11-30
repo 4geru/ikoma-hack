@@ -31,7 +31,7 @@ post '/callback' do
       case event.type
       when Line::Bot::Event::MessageType::Text
         if event.message['text'] == 'ビーコン'
-      
+
       msg = "クリアです！みんなで記念写真を撮ってね！"
       message = [
         {
@@ -48,12 +48,14 @@ post '/callback' do
         elsif event.message['text'] == 'ヒントをください'
           client.reply_message(event['replyToken'], hint_confirm())
         elsif event.message['text'] == 'ゲームスタート'
+          rand_num = (0..50).to_a.sample(5)
+          
           data = make_carousel_template_data([
-              AllStory.find(1),
-              AllStory.find(2),
-              AllStory.find(3),
-              AllStory.find(4),
-              AllStory.find(5)
+              AllStory.find(rand_num[0].to-i),
+              AllStory.find(rand_num[1].to-i),
+              AllStory.find(rand_num[2].to-i),
+              AllStory.find(rand_num[3].to-i),
+              AllStory.find(rand_num[4].to-i)
             ])
             p data
           client.reply_message(event['replyToken'], data)
