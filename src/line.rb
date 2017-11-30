@@ -149,6 +149,8 @@ post '/callback' do
       p data
       case data['action']
       when 'start'
+        goal_lat = 35
+        goal_lng = 140
         message = {
           type: 'text',
           text: "楽しい冒険が始まるよ！頑張ってね！"
