@@ -131,9 +131,9 @@ post '/callback' do
         tf.write(response.body)
 
       when 'location'
-        @goal_lat ||= 35
-        @goal_lng ||= 100
-        p @goal_lat, @goal_lng, "set value 35,100"
+        # @goal_lat ||= 35
+        # @goal_lng ||= 100
+        # p @goal_lat, @goal_lng, "set value 35,100"
         message = {
           type: 'text',
           text: hint_location(event.message['latitude'], event.message['longitude'], @goal_lat, @goal_lng)
