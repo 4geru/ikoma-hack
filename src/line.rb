@@ -50,13 +50,18 @@ post '/callback' do
         elsif event.message['text'] == 'ゲームスタート'
           rand_ids = AllStory.where("lat is not ?", nil).ids
           rand_num = rand_ids.sample(5)
+          goal_0 = AllStory.find(rand_num[0].to_i)
+          goal_1 = AllStory.find(rand_num[1].to_i)
+          goal_2 = AllStory.find(rand_num[2].to_i)
+          goal_3 = AllStory.find(rand_num[3].to_i)
+          goal_4 = AllStory.find(rand_num[4].to_i)
 
           data = make_carousel_template_data([
-              AllStory.find(rand_num[0].to_i),
-              AllStory.find(rand_num[1].to_i),
-              AllStory.find(rand_num[2].to_i),
-              AllStory.find(rand_num[3].to_i),
-              AllStory.find(rand_num[4].to_i)
+              goal_0,
+              goal_1,
+              goal_2,
+              goal_3,
+              goal_4
             ])
             p data
           client.reply_message(event['replyToken'], data)
