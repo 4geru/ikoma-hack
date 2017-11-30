@@ -49,8 +49,7 @@ post '/callback' do
           client.reply_message(event['replyToken'], hint_confirm())
         elsif event.message['text'] == 'ゲームスタート'
           rand_ids = AllStory.where("lat is not ?", nil).ids
-          p rand_ids
-          rand_num = (0..50).to_a.sample(5)
+          rand_num = rand_ids.sample(5)
 
           data = make_carousel_template_data([
               AllStory.find(rand_num[0].to_i),
