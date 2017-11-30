@@ -56,7 +56,12 @@ post '/callback' do
           goal_3 = AllStory.find(rand_num[3].to_i)
           goal_4 = AllStory.find(rand_num[4].to_i)
 
-          p goal_0.lat
+          puts goal_0.lat
+          puts goal_1.lat
+          puts goal_2.lat
+          puts goal_3.lat
+          puts goal_4.lat
+
 
           data = make_carousel_template_data([
               goal_0,
