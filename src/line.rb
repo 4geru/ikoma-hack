@@ -16,6 +16,8 @@ def client
 end
 
 post '/callback' do
+  goal_lat = 34.724944
+  goal_lng = 135.723749
   body = request.body.read
   signature = request.env['HTTP_X_LINE_SIGNATURE']
   unless client.validate_signature(body, signature)
@@ -45,24 +47,26 @@ post '/callback' do
         }
       ]
       client.reply_message(event['replyToken'], message)
+
         elsif event.message['text'] == 'ヒントをください'
           client.reply_message(event['replyToken'], hint_confirm())
+
         elsif event.message['text'] == 'ゲームスタート'
           rand_ids = AllStory.where("lat is not ?", nil).ids
           rand_num = rand_ids.sample(5)
-          goal_0 = AllStory.find(rand_num[0].to_i)
-          goal_1 = AllStory.find(rand_num[1].to_i)
-          goal_2 = AllStory.find(rand_num[2].to_i)
-          goal_3 = AllStory.find(rand_num[3].to_i)
-          goal_4 = AllStory.find(rand_num[4].to_i)
-
+          goal = []
+          goal[0] = AllStory.find(rand_num[0].to_i)
+          goal[1] = AllStory.find(rand_num[1].to_i)
+          goal[2] = AllStory.find(rand_num[2].to_i)
+          goal[3] = AllStory.find(rand_num[3].to_i)
+          goal[4] = AllStory.find(rand_num[4].to_i)
 
           data = make_carousel_template_data([
-              goal_0,
-              goal_1,
-              goal_2,
-              goal_3,
-              goal_4
+              goal[0],
+              goal[1],
+              goal[2],
+              goal[3],
+              goal[4]
             ])
             p data
           client.reply_message(event['replyToken'], data)
