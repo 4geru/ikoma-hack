@@ -15,6 +15,18 @@ def client
   }
 end
 
+def get_lat()
+end
+
+def set_lat(lat)
+end
+
+def get_lng()
+end
+
+def set_lng(lng)
+end
+
 post '/callback' do
   body = request.body.read
   signature = request.env['HTTP_X_LINE_SIGNATURE']
@@ -70,6 +82,7 @@ post '/callback' do
             p data
             @goal_lat = goal[0].lat
             @goal_lng = goal[0].lng
+            p @goal_lat, @goal_lng, "set value goal[0]"
           client.reply_message(event['replyToken'], data)
 
         elsif event.message['text'] == 'ギブアップ'
@@ -120,6 +133,7 @@ post '/callback' do
       when 'location'
         @goal_lat ||= 35
         @goal_lng ||= 100
+        p @goal_lat, @goal_lng, "set value 35,100"
         message = {
           type: 'text',
           text: hint_location(event.message['latitude'], event.message['longitude'], @goal_lat, @goal_lng)
@@ -152,6 +166,7 @@ post '/callback' do
       when 'start'
         @goal_lat = 35
         @goal_lng = 140
+        p @goal_lat, @goal_lng, "set value 35,140"
         message = {
           type: 'text',
           text: "楽しい冒険が始まるよ！頑張ってね！"
