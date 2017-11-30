@@ -1,7 +1,7 @@
 require 'sinatra'
 
 get '/' do
-  "Hello world"
+  "Hello world2"
 end
 
 get '/map' do
