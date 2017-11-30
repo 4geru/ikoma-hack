@@ -48,6 +48,8 @@ post '/callback' do
         elsif event.message['text'] == 'ヒントをください'
           client.reply_message(event['replyToken'], hint_confirm())
         elsif event.message['text'] == 'ゲームスタート'
+          rand_ids = AllStory.where("lat not ?", nil).keys
+          puts rand_ids
           rand_num = (0..50).to_a.sample(5)
 
           data = make_carousel_template_data([
