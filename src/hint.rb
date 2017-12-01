@@ -1,7 +1,7 @@
 def hint_confirm()
 {
   "type": "template",
-  "altText": "ヒント洗濯中",
+  "altText": "ヒント選択中",
   "template": {
       "type": "confirm",
       "text": "ヒントを使いますか?",
@@ -23,12 +23,12 @@ end
 
 # :latitude => 34.693027,
 # :longitude => 135.6954373
-def hint_location(latitude, longitude, answer_id = '')
+def hint_location(latitude, longitude, goal_lat, goal_lng, answer_id = '')
   hint_index = Random.rand(2)
   # answer = AllStory.find(answer_id)
-  answer = target()
+  answer = target(goal_lat, goal_lng)
   answer_pos = [answer[:latitude], answer[:longitude]]
-  p latitude, longitude
+  # p latitude, longitude
   target_pos = [latitude, longitude]
   # p answer_pos
   # p target_pos
@@ -37,7 +37,7 @@ def hint_location(latitude, longitude, answer_id = '')
     # angle
     p get_angle(target_pos, answer_pos) + "の方向に進め"
     return get_angle(target_pos, answer_pos) + "の方向に進め"
-  when 1 
+  when 1
     # distance
     if get_distance(target_pos, answer_pos) > 1
       ret = sprintf("%.1fkm", get_distance(target_pos, answer_pos))
@@ -60,16 +60,17 @@ def get_distance(pos1, pos2)
 	y2 = lat2 * Math::PI / 180
 	x2 = lng2 * Math::PI / 180
 	earth_r = 6378140
-		
+
 	deg = Math::sin(y1) * Math::sin(y2) + Math::cos(y1) * Math::cos(y2) * Math::cos(x2 - x1)
 	distance = earth_r * (Math::atan(-deg / Math::sqrt(-deg * deg + 1)) + Math::PI / 2) / 1000
 end
 
-def target()
+def target(goal_lat, goal_lng)
   # pos2 = [34.724944, 135.723749] #きた生駒
+  p goal_lat, goal_lng
   {
-    :latitude => 34.724944,
-    :longitude => 135.723749
+    :latitude => goal_lat,
+    :longitude => goal_lng
   }
 end
 

@@ -16,6 +16,8 @@ def client
 end
 
 post '/callback' do
+  @goal_lat = 10
+  @goal_lng = 100
   body = request.body.read
   signature = request.env['HTTP_X_LINE_SIGNATURE']
   unless client.validate_signature(body, signature)
@@ -27,11 +29,12 @@ post '/callback' do
   events.each { |event|
     p event
     case event
+
     when Line::Bot::Event::Message
       case event.type
       when Line::Bot::Event::MessageType::Text
         if event.message['text'] == 'ビーコン'
-      
+
       msg = "クリアです！みんなで記念写真を撮ってね！"
       message = [
         {
@@ -45,18 +48,32 @@ post '/callback' do
         }
       ]
       client.reply_message(event['replyToken'], message)
+
         elsif event.message['text'] == 'ヒントをください'
           client.reply_message(event['replyToken'], hint_confirm())
+
         elsif event.message['text'] == 'ゲームスタート'
+          rand_ids = AllStory.where("lat is not ?", nil).ids
+          rand_num = rand_ids.sample(5)
+          goal = []
+          goal[0] = AllStory.find(rand_num[0].to_i)
+          goal[1] = AllStory.find(rand_num[1].to_i)
+          goal[2] = AllStory.find(rand_num[2].to_i)
+          goal[3] = AllStory.find(rand_num[3].to_i)
+          goal[4] = AllStory.find(rand_num[4].to_i)
+
           data = make_carousel_template_data([
-              AllStory.find(1),
-              AllStory.find(2),
-              AllStory.find(3),
-              AllStory.find(4),
-              AllStory.find(5)
+              goal[0],
+              goal[1],
+              goal[2],
+              goal[3],
+              goal[4]
             ])
             p data
+            @goal_lat = goal[0].lat
+            @goal_lng = goal[0].lng
           client.reply_message(event['replyToken'], data)
+
         elsif event.message['text'] == 'ギブアップ'
           client.reply_message(event['replyToken'], give_up_confirm())
         end
@@ -66,9 +83,9 @@ post '/callback' do
           text: event.message['text']
         }
         client.reply_message(event['replyToken'], message)
+
       when Line::Bot::Event::MessageType::Image
         response = client.get_message_content(event.message['id'])
-
         image = MiniMagick::Image.read(response.body)
         imageName = SecureRandom.uuid
         image.write("tmp/#{imageName}.jpg")
@@ -96,17 +113,20 @@ post '/callback' do
         ]
 
         client.reply_message(event['replyToken'], message)
+
       when Line::Bot::Event::MessageType::Video
         response = client.get_message_content(event.message['id'])
         tf = Tempfile.open("content")
         tf.write(response.body)
+
       when 'location'
         message = {
           type: 'text',
-          text: hint_location(event.message['latitude'], event.message['longitude'])
+          text: hint_location(event.message['latitude'], event.message['longitude'], @goal_lat, @goal_lng)
         }
         client.reply_message(event['replyToken'], message)
       end
+
     when Line::Bot::Event::Beacon
       msg = "クリアです！みんなで記念写真を撮ってね！"
       message = [
@@ -118,6 +138,10 @@ post '/callback' do
           type: "sticker",
           packageId: "1",
           stickerId: "136"
+        },
+        {
+          type: 'text',
+          text: "idは" + event['beacon']['hwid'] + "です！"
         }
       ]
       client.reply_message(event['replyToken'], message)
