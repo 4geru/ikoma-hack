@@ -1,4 +1,4 @@
-class SelfStries < ActiveRecord::Migration[5.1]
+class SelfStries < ActiveRecord::Migration[4.2]
   def change
     create_table :self_stories do |t|
       t.string  :url

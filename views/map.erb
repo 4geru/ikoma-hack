@@ -31,10 +31,10 @@
   </head>
   <body>
     <ul id="slide-out" class="side-nav">
-      <li>No. <%= @story.id %></li>
-      <li><%= @story.title %></li>
-      <li><img class="circle" src="<%= @photos.url%>"></li>
-      <li><%= @story.detail %></li>
+      <li><p id='no'></p></li>
+      <li><p id='title'></p></li>
+      <img id='photo' />
+      <p id='detail'></p>
     </ul>
   <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
 
@@ -51,10 +51,18 @@
         });
 
         // Create an array of alphabetical characters used to label the markers.
-        var labels = [
-          '阿弥陀寺〔あみだじ〕'
-          ];
-
+        var labels = [<% for story in @story %>
+          "<%= story.title %>",
+          <% end %>];
+        var numbers = [<% for story in @story %>
+          "<%= story.id %>",
+          <% end %>];
+        var details = [<% for story in @story %>
+          "<%= story.detail %>",
+          <% end %>];
+        var photos = [<% for photo in @photo %>
+          "<%= photo.url %>",
+          <% end %>];
         // Add some markers to the map.
         // Note: The code uses the JavaScript Array.prototype.map() method to
         // create an array of markers based on a given "locations" array.
@@ -69,6 +77,11 @@
             console.log(labels[i % labels.length]);
             map.setZoom(15);
             map.setCenter(location);
+            console.log(document.getElementById('no'))
+            document.getElementById('no').innerHTML = 'No' + numbers[i % labels.length];
+            document.getElementById('title').innerHTML = labels[i % labels.length];
+            document.getElementById('detail').innerHTML = details[i % labels.length];
+            document.getElementById('photo').src = photos[i % labels.length];
             $('.button-collapse').sideNav('show');
           });
           
@@ -79,9 +92,9 @@
         var markerCluster = new MarkerClusterer(map, markers,
             {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
       }
-      var locations = [
-        {lat: 34.7185079, lng: 135.6567286},
-      ]
+      var locations = [<% for story in @story %>
+         {lat: <%= story.lng %>, lng: <%= story.lat %>},
+      <% end %>]
     </script>
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
     </script>

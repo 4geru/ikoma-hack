@@ -5,14 +5,14 @@ get '/' do
 end
 
 get '/map' do
-  @story = AllStory.first
-  @photos = Photo.first
+  @story = AllStory.all
+  @photo = []
   erb :map
 end
 
 get '/map/:id' do
   @story = User.find(params[:id]).photos.map{|photo| photo.all_story }
-  puts @story
-  @photos = Photo.first
+  @story = @story.select{|story| not story.lat.nil? }
+  @photo = User.find(params[:id]).photos
   erb :map
 end

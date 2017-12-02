@@ -18,10 +18,10 @@ end
 
 post '/callback' do
   body = request.body.read
+
   signature = request.env['HTTP_X_LINE_SIGNATURE']
   unless client.validate_signature(body, signature)
-    error 400 do 'Bad Request'
-    end
+    error 400 do 'Bad Request' end
   end
 
   events = client.parse_events_from(body)
@@ -91,7 +91,11 @@ post '/callback' do
         result = Cloudinary::Uploader.upload("/tmp/#{imageName}.jpg")
         image = Photo.create({
           user_id: user.id,
+<<<<<<< HEAD
           all_story_id: user.all_story_id,
+=======
+          all_story_id: user.photos.length + 1,
+>>>>>>> master
           url: result['secure_url']
         })
 
