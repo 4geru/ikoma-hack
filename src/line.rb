@@ -127,9 +127,10 @@ post '/callback' do
 
       when 'location'
         user = User.find_or_create_by({user_id: event["source"]["userId"]})
+        story = AllStory.find(id: user.all_story_id)
         message = {
           type: 'text',
-          text: hint_location(event.message['latitude'], event.message['longitude'], user.lat, user.lng)
+          text: hint_location(event.message['latitude'], event.message['longitude'], story.lat, story.lng)
         }
         client.reply_message(event['replyToken'], message)
       end
