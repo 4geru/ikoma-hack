@@ -91,11 +91,7 @@ post '/callback' do
         result = Cloudinary::Uploader.upload("/tmp/#{imageName}.jpg")
         image = Photo.create({
           user_id: user.id,
-<<<<<<< HEAD
           all_story_id: user.all_story_id,
-=======
-          all_story_id: user.photos.length + 1,
->>>>>>> master
           url: result['secure_url']
         })
 
