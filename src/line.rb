@@ -28,7 +28,7 @@ post '/callback' do
 
   events = client.parse_events_from(body)
   events.each { |event|
-    User.create({user_id: event["source"]["userId"]})
+    User.find_or_create_by({user_id: event["source"]["userId"]})
     case event
 
     when Line::Bot::Event::Message
@@ -62,6 +62,8 @@ post '/callback' do
           goal[2] = AllStory.find(rand_num[2].to_i)
           goal[3] = AllStory.find(rand_num[3].to_i)
           goal[4] = AllStory.find(rand_num[4].to_i)
+          user = User.find_or_create_by({user_id: event["source"]["userId"]})
+          user.all_story_id = goal[0].id
 
           data = make_carousel_template_data([
               goal[0],
@@ -124,9 +126,10 @@ post '/callback' do
         tf.write(response.body)
 
       when 'location'
+        user = User.find_or_create_by({user_id: event["source"]["userId"]})
         message = {
           type: 'text',
-          text: hint_location(event.message['latitude'], event.message['longitude'], @goal_lat, @goal_lng)
+          text: hint_location(event.message['latitude'], event.message['longitude'], user.lat, user.lng)
         }
         client.reply_message(event['replyToken'], message)
       end

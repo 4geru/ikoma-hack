@@ -1,4 +1,4 @@
-class AllStries < ActiveRecord::Migration
+class AllStries < ActiveRecord::Migration[5.1]
   def change
     create_table :all_stories do |t|
       t.integer :beacon_id
