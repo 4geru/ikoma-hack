@@ -9,9 +9,10 @@ end
 
 class Photo < ActiveRecord::Base
   belongs_to :user
-  belongs_to :all_storie
+  belongs_to :all_story
 end
 
 class User < ActiveRecord::Base
   has_many :photos
+  validates :user_id, uniqueness: true
 end
