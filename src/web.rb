@@ -12,6 +12,7 @@ end
 
 get '/map/:id' do
   @story = User.find(params[:id]).photos.map{|photo| photo.all_story }
+  @story = @story.select{|story| not story.lat.nil? }
   @photo = User.find(params[:id]).photos
   erb :map
 end

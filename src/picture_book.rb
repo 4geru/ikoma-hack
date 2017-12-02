@@ -10,7 +10,7 @@ def picture_book(user_id)
           {
             "type": "uri",
             "label": "Webページへ",
-            "uri": "https://ikoma-rp7rf.c9users.io/map/#{user_id}"
+            "uri": "https://ikoma-hack.herokuapp.com/map/#{user_id}"
           }
       ]
   }
