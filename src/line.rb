@@ -17,8 +17,6 @@ def client
 end
 
 post '/callback' do
-  @goal_lat = 10
-  @goal_lng = 100
   body = request.body.read
   signature = request.env['HTTP_X_LINE_SIGNATURE']
   unless client.validate_signature(body, signature)
@@ -62,7 +60,6 @@ post '/callback' do
           goal[2] = AllStory.find(rand_num[2].to_i)
           goal[3] = AllStory.find(rand_num[3].to_i)
           goal[4] = AllStory.find(rand_num[4].to_i)
-          # p user.user_id, user.all_story_id
 
           data = make_carousel_template_data([
               goal[0],
@@ -72,8 +69,6 @@ post '/callback' do
               goal[4]
             ])
             # p data
-            @goal_lat = goal[0].lat
-            @goal_lng = goal[0].lng
           client.reply_message(event['replyToken'], data)
 
         elsif event.message['text'] == 'ギブアップ'
@@ -94,7 +89,6 @@ post '/callback' do
         imageName = SecureRandom.uuid
         image.write("/tmp/#{imageName}.jpg")
         result = Cloudinary::Uploader.upload("/tmp/#{imageName}.jpg")
-        # user = User.where({user_id: event["source"]["userId"]}).first
         image = Photo.create({
           user_id: user.id,
           all_story_id: user.all_story_id,
@@ -125,8 +119,6 @@ post '/callback' do
         tf.write(response.body)
 
       when 'location'
-        # user = User.find_or_create_by({user_id: event["source"]["userId"]})
-        p user.user_id, AllStory.find(user.all_story_id).title
         story = AllStory.find(user.all_story_id)
         message = {
           type: 'text',
@@ -159,7 +151,6 @@ post '/callback' do
       p data
       case data['action']
       when 'start'
-        # user = User.find_or_create_by({user_id: event["source"]["userId"]})
         user.all_story_id = data["place_id"]
         user.save
         story = AllStory.find(data["place_id"])
