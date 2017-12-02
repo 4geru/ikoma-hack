@@ -62,11 +62,7 @@ post '/callback' do
           goal[2] = AllStory.find(rand_num[2].to_i)
           goal[3] = AllStory.find(rand_num[3].to_i)
           goal[4] = AllStory.find(rand_num[4].to_i)
-          
-          user = User.find_or_create_by({user_id: event["source"]["userId"]})
-          user.all_story_id = goal[0].id
-          user.save
-          p user.user_id, user.all_story_id
+          # p user.user_id, user.all_story_id
 
           data = make_carousel_template_data([
               goal[0],
@@ -75,7 +71,7 @@ post '/callback' do
               goal[3],
               goal[4]
             ])
-            p data
+            # p data
             @goal_lat = goal[0].lat
             @goal_lng = goal[0].lng
           client.reply_message(event['replyToken'], data)
@@ -163,9 +159,13 @@ post '/callback' do
       p data
       case data['action']
       when 'start'
+        user = User.find_or_create_by({user_id: event["source"]["userId"]})
+        user.all_story_id = data["place_id"]
+        user.save
+        story = AllStor.find(data["place_id"])
         message = {
           type: 'text',
-          text: "楽しい冒険が始まるよ！頑張ってね！" + data["place_id"]
+          text: "目的地は"+ story.title +"だね！楽しい冒険が始まるよ！頑張ってね！"
         }
         client.reply_message(event['replyToken'], message)
       when 'giveup'
