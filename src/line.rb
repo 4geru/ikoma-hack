@@ -162,10 +162,10 @@ post '/callback' do
         user = User.find_or_create_by({user_id: event["source"]["userId"]})
         user.all_story_id = data["place_id"]
         user.save
-        story = AllStor.find(data["place_id"])
+        story = AllStory.find(data["place_id"])
         message = {
           type: 'text',
-          text: "目的地は"+ story.title +"だね！楽しい冒険が始まるよ！頑張ってね！"
+          text: "目的地は" + story.title + "だね！楽しい冒険が始まるよ！頑張ってね！"
         }
         client.reply_message(event['replyToken'], message)
       when 'giveup'
