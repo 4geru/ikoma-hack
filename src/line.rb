@@ -165,7 +165,7 @@ post '/callback' do
       when 'start'
         message = {
           type: 'text',
-          text: "楽しい冒険が始まるよ！頑張ってね！" + data["actions"]["data"]
+          text: "楽しい冒険が始まるよ！頑張ってね！" + data["place_id"]
         }
         client.reply_message(event['replyToken'], message)
       when 'giveup'
