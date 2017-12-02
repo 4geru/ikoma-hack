@@ -28,7 +28,7 @@ post '/callback' do
 
   events = client.parse_events_from(body)
   events.each { |event|
-    User.find_or_create_by({user_id: event["source"]["userId"]})
+    user = User.find_or_create_by({user_id: event["source"]["userId"]})
     case event
 
     when Line::Bot::Event::Message
@@ -94,10 +94,10 @@ post '/callback' do
         imageName = SecureRandom.uuid
         image.write("/tmp/#{imageName}.jpg")
         result = Cloudinary::Uploader.upload("/tmp/#{imageName}.jpg")
-        user = User.where({user_id: event["source"]["userId"]}).first
+        # user = User.where({user_id: event["source"]["userId"]}).first
         image = Photo.create({
           user_id: user.id,
-          all_story_id: 1,
+          all_story_id: user.all_story_id,
           url: result['secure_url']
         })
 
@@ -125,7 +125,7 @@ post '/callback' do
         tf.write(response.body)
 
       when 'location'
-        user = User.find_or_create_by({user_id: event["source"]["userId"]})
+        # user = User.find_or_create_by({user_id: event["source"]["userId"]})
         p user.user_id, AllStory.find(user.all_story_id).title
         story = AllStory.find(user.all_story_id)
         message = {
@@ -159,7 +159,7 @@ post '/callback' do
       p data
       case data['action']
       when 'start'
-        user = User.find_or_create_by({user_id: event["source"]["userId"]})
+        # user = User.find_or_create_by({user_id: event["source"]["userId"]})
         user.all_story_id = data["place_id"]
         user.save
         story = AllStory.find(data["place_id"])
