@@ -62,8 +62,10 @@ post '/callback' do
           goal[2] = AllStory.find(rand_num[2].to_i)
           goal[3] = AllStory.find(rand_num[3].to_i)
           goal[4] = AllStory.find(rand_num[4].to_i)
+          
           user = User.find_or_create_by({user_id: event["source"]["userId"]})
           user.all_story_id = goal[0].id
+          user.save
           p user.user_id, user.all_story_id
 
           data = make_carousel_template_data([
@@ -128,6 +130,7 @@ post '/callback' do
 
       when 'location'
         user = User.find_or_create_by({user_id: event["source"]["userId"]})
+        p user.user_id, user.all_story_id
         story = AllStory.find(id: user.all_story_id)
         message = {
           type: 'text',
@@ -154,6 +157,7 @@ post '/callback' do
         }
       ]
       client.reply_message(event['replyToken'], message)
+
     when Line::Bot::Event::Postback
       data =  URI::decode_www_form(event['postback']['data']).to_h
       p data
