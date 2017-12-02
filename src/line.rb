@@ -2,6 +2,7 @@ require 'line/bot'
 require './src/hint'
 require './src/start'
 require './src/give_up'
+require './src/picture_book'
 
 require 'dotenv'
 Dotenv.load
@@ -59,6 +60,8 @@ post '/callback' do
           client.reply_message(event['replyToken'], data)
         elsif event.message['text'] == 'ギブアップ'
           client.reply_message(event['replyToken'], give_up_confirm())
+        elsif event.message['text'] == '図鑑'
+          client.reply_message(event['replyToken'], picture_book(User.find_by(user_id: event["source"]["userId"]).id))
         end
         msg = Hello.new.message(event.message['text'])
         message = {
@@ -71,8 +74,8 @@ post '/callback' do
 
         image = MiniMagick::Image.read(response.body)
         imageName = SecureRandom.uuid
-        image.write("tmp/#{imageName}.jpg")
-        result = Cloudinary::Uploader.upload("tmp/#{imageName}.jpg")
+        image.write("/tmp/#{imageName}.jpg")
+        result = Cloudinary::Uploader.upload("/tmp/#{imageName}.jpg")
         user = User.where({user_id: event["source"]["userId"]}).first
         image = Photo.create({
           user_id: user.id,
