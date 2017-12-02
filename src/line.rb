@@ -96,7 +96,7 @@ post '/callback' do
         user = User.where({user_id: event["source"]["userId"]}).first
         image = Photo.create({
           user_id: user.id,
-          all_story_id: 1,
+          all_story_id: user.photos.length + 1,
           url: result['secure_url']
         })
 
