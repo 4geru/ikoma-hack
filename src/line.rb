@@ -4,6 +4,7 @@ require './src/start'
 require './src/give_up'
 require './src/clear'
 require './src/picture_book'
+require './src/please_start'
 
 require 'dotenv'
 Dotenv.load
@@ -37,7 +38,11 @@ post '/callback' do
           client.reply_message(event['replyToken'], clear_message)
 
         elsif event.message['text'] == 'ヒントをください'
-          client.reply_message(event['replyToken'], hint_confirm())
+          if user.all_story.nil?
+            client.reply_message(event['replyToken'], please_start())
+          else
+            client.reply_message(event['replyToken'], hint_confirm())
+          end
         elsif event.message['text'] == 'ゲームスタート'
           rand_ids = AllStory.where("lat is not ?", nil).ids
           rand_num = rand_ids.sample(5)
@@ -59,7 +64,11 @@ post '/callback' do
           client.reply_message(event['replyToken'], data)
 
         elsif event.message['text'] == 'ギブアップ'
-          client.reply_message(event['replyToken'], give_up_confirm())
+          if user.all_story.nil?
+            client.reply_message(event['replyToken'], please_start())
+          else
+            client.reply_message(event['replyToken'], give_up_confirm())
+          end
         elsif event.message['text'] == '図鑑'
           client.reply_message(event['replyToken'], picture_book(User.find_by(user_id: event["source"]["userId"]).id))
         end
@@ -157,7 +166,8 @@ post '/callback' do
           type: 'text',
           text: "お疲れ様！また頑張ってね！"
         }
-        user.all_story = nil
+        user.all_story_id = nil
+        user.save
         client.reply_message(event['replyToken'], message)
       end
     end
