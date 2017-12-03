@@ -122,7 +122,7 @@ post '/callback' do
         story = AllStory.find(user.all_story_id)
         message = {
           type: 'text',
-          text: hint_location(event.message['latitude'], event.message['longitude'], story.lat, story.lng)
+          text: hint_location(event.message['latitude'], event.message['longitude'], story)
         }
         client.reply_message(event['replyToken'], message)
       end
