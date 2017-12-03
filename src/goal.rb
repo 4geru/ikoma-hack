@@ -25,8 +25,8 @@ def goal_upload_photo_messge(user)
       stickerId: "136"
     },
     {
-      "type": "uri",
-      "uri": "line://nv/camera/"
+      type: "text",
+      uri: "line://nv/camera/"
     }
   ]
 end
