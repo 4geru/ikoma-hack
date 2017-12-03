@@ -70,7 +70,7 @@ post '/callback' do
             client.reply_message(event['replyToken'], give_up_confirm())
           end
         elsif event.message['text'] == '図鑑'
-          client.reply_message(event['replyToken'], picture_book(User.find_by(user_id: event["source"]["userId"]).id))
+          client.reply_message(event['replyToken'], picture_book(user))
         end
         msg = Hello.new.message(event.message['text'])
         message = {

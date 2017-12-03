@@ -1,5 +1,7 @@
-def picture_book(user_id)
-  photos = User.find(user_id).photos
+def picture_book(user)
+  photos = user.photos
+  root = 'https://ikoma-hack.herokuapp.com/map'
+  
   {
   "type": "template",
   "altText": "図鑑選択中",
@@ -11,7 +13,7 @@ def picture_book(user_id)
           {
             "type": "uri",
             "label": "Webページへ",
-            "uri": "https://ikoma-hack.herokuapp.com/map/#{user_id}"
+            "uri": "#{root}/#{user.id}"
           }
       ]
   }
