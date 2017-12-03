@@ -22,7 +22,7 @@ def hint_confirm()
 end
 
 def hint_location(latitude, longitude, goal)
-  
+
   answer = target(goal.lng, goal.lat)
   answer_pos = [answer[:latitude], answer[:longitude]]
   target_pos = [latitude, longitude]
