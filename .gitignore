@@ -1,1 +1,4 @@
 /vendor
+.env
+.bundle
+db/development..db

@@ -1,8 +1,11 @@
 require 'line/bot'
 require './src/hint'
 require './src/start'
+require './src/goal'
 require './src/give_up'
+require './src/clear'
 require './src/picture_book'
+require './src/please_start'
 
 require 'dotenv'
 Dotenv.load
@@ -33,48 +36,28 @@ post '/callback' do
       case event.type
       when Line::Bot::Event::MessageType::Text
         if event.message['text'] == 'ビーコン'
-
-      msg = "クリアです！みんなで記念写真を撮ってね！"
-      message = [
-        {
-          type: 'text',
-          text: msg
-        },
-        {
-          type: "sticker",
-          packageId: "1",
-          stickerId: "136"
-        }
-      ]
-      client.reply_message(event['replyToken'], message)
+          client.reply_message(event['replyToken'], clear_message)
 
         elsif event.message['text'] == 'ヒントをください'
-          client.reply_message(event['replyToken'], hint_confirm())
-
+          if user.all_story.nil?
+            client.reply_message(event['replyToken'], please_start())
+          else
+            client.reply_message(event['replyToken'], hint_confirm())
+          end
         elsif event.message['text'] == 'ゲームスタート'
-          rand_ids = AllStory.where("lat is not ?", nil).ids
-          rand_num = rand_ids.sample(5)
-          goal = []
-          goal[0] = AllStory.find(rand_num[0].to_i)
-          goal[1] = AllStory.find(rand_num[1].to_i)
-          goal[2] = AllStory.find(rand_num[2].to_i)
-          goal[3] = AllStory.find(rand_num[3].to_i)
-          goal[4] = AllStory.find(rand_num[4].to_i)
-
-          data = make_carousel_template_data([
-              goal[0],
-              goal[1],
-              goal[2],
-              goal[3],
-              goal[4]
-            ])
+          all_story = AllStory.where("lat is not ?", nil).shuffle[0..4]
+          data = make_carousel_template_data(all_story)
             # p data
           client.reply_message(event['replyToken'], data)
 
         elsif event.message['text'] == 'ギブアップ'
-          client.reply_message(event['replyToken'], give_up_confirm())
+          if user.all_story.nil?
+            client.reply_message(event['replyToken'], please_start())
+          else
+            client.reply_message(event['replyToken'], give_up_confirm())
+          end
         elsif event.message['text'] == '図鑑'
-          client.reply_message(event['replyToken'], picture_book(User.find_by(user_id: event["source"]["userId"]).id))
+          client.reply_message(event['replyToken'], picture_book(user))
         end
         msg = Hello.new.message(event.message['text'])
         message = {
@@ -95,23 +78,7 @@ post '/callback' do
           url: result['secure_url']
         })
 
-        message = [
-          {
-            type: 'text',
-            text: "アルバムに画像を保存しました！！おめでとう！！"
-          },
-          {
-            type: "sticker",
-            packageId: "1",
-            stickerId: "407"
-          },
-          {
-            type: 'text',
-            text: image.url
-          }
-        ]
-
-        client.reply_message(event['replyToken'], message)
+        client.reply_message(event['replyToken'], goal_uploaded_photo_message(user))
 
       when Line::Bot::Event::MessageType::Video
         response = client.get_message_content(event.message['id'])
@@ -119,33 +86,16 @@ post '/callback' do
         tf.write(response.body)
 
       when 'location'
-        story = AllStory.find(user.all_story_id)
+        story = user.all_story
         message = {
           type: 'text',
-          text: hint_location(event.message['latitude'], event.message['longitude'], story.lat, story.lng)
+          text: hint_location(event.message['latitude'], event.message['longitude'], story)
         }
         client.reply_message(event['replyToken'], message)
       end
 
     when Line::Bot::Event::Beacon
-      msg = "クリアです！みんなで記念写真を撮ってね！"
-      message = [
-        {
-          type: 'text',
-          text: msg
-        },
-        {
-          type: "sticker",
-          packageId: "1",
-          stickerId: "136"
-        },
-        {
-          type: 'text',
-          text: "idは" + event['beacon']['hwid'] + "です！"
-        }
-      ]
-      client.reply_message(event['replyToken'], message)
-
+      client.reply_message(event['replyToken'], goal_upload_photo_messge(user))
     when Line::Bot::Event::Postback
       data =  URI::decode_www_form(event['postback']['data']).to_h
       p data
@@ -153,7 +103,7 @@ post '/callback' do
       when 'start'
         user.all_story_id = data["place_id"]
         user.save
-        story = AllStory.find(data["place_id"])
+        story = user.all_story
         message = {
           type: 'text',
           text: "目的地は" + story.title + "だね！楽しい冒険が始まるよ！頑張ってね！"
@@ -170,6 +120,8 @@ post '/callback' do
           type: 'text',
           text: "お疲れ様！また頑張ってね！"
         }
+        user.all_story_id = nil
+        user.save
         client.reply_message(event['replyToken'], message)
       end
     end
