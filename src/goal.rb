@@ -23,6 +23,11 @@ def goal_upload_photo_messge(user)
       type: "sticker",
       packageId: "1",
       stickerId: "136"
+    },
+    {
+      type: "uri",
+      label: "撮影",
+      uri: "line://nv/camera/"
     }
   ]
 end
