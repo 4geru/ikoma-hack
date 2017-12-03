@@ -1,6 +1,5 @@
 def picture_book(user)
   photos = user.photos
-  root = 'https://ikoma-hack.herokuapp.com/map'
   
   {
   "type": "template",
@@ -13,7 +12,7 @@ def picture_book(user)
           {
             "type": "uri",
             "label": "Webページへ",
-            "uri": "#{root}/#{user.id}"
+            "uri": "#{ENV["ROOT_PATH"]}/#{user.id}"
           }
       ]
   }
