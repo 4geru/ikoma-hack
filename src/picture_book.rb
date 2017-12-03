@@ -1,6 +1,6 @@
 def picture_book(user)
   photos = user.photos
-  
+
   {
   "type": "template",
   "altText": "図鑑選択中",
