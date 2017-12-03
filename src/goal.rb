@@ -26,7 +26,6 @@ def goal_upload_photo_messge(user)
     },
     {
       "type": "uri",
-      "label": "Yes",
       "uri": "line://nv/camera/"
     }
   ]
