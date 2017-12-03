@@ -26,6 +26,7 @@ def goal_upload_photo_messge(user)
     },
     {
       type: "text",
+      label: "写真撮影",
       text: "line://nv/camera/"
     }
   ]
