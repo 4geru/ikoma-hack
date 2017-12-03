@@ -50,7 +50,6 @@ post '/callback' do
 
         elsif event.message['text'] == 'ヒントをください'
           client.reply_message(event['replyToken'], hint_confirm())
-
         elsif event.message['text'] == 'ゲームスタート'
           rand_ids = AllStory.where("lat is not ?", nil).ids
           rand_num = rand_ids.sample(5)
@@ -170,6 +169,7 @@ post '/callback' do
           type: 'text',
           text: "お疲れ様！また頑張ってね！"
         }
+        user.all_story = nil
         client.reply_message(event['replyToken'], message)
       end
     end
