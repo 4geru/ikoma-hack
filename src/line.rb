@@ -17,8 +17,6 @@ def client
 end
 
 post '/callback' do
-  @goal_lat = 10
-  @goal_lng = 100
   body = request.body.read
 
   signature = request.env['HTTP_X_LINE_SIGNATURE']
@@ -28,7 +26,7 @@ post '/callback' do
 
   events = client.parse_events_from(body)
   events.each { |event|
-    User.create({user_id: event["source"]["userId"]})
+    user = User.find_or_create_by({user_id: event["source"]["userId"]})
     case event
 
     when Line::Bot::Event::Message
@@ -70,9 +68,7 @@ post '/callback' do
               goal[3],
               goal[4]
             ])
-            p data
-            @goal_lat = goal[0].lat
-            @goal_lng = goal[0].lng
+            # p data
           client.reply_message(event['replyToken'], data)
 
         elsif event.message['text'] == 'ギブアップ'
@@ -93,10 +89,9 @@ post '/callback' do
         imageName = SecureRandom.uuid
         image.write("/tmp/#{imageName}.jpg")
         result = Cloudinary::Uploader.upload("/tmp/#{imageName}.jpg")
-        user = User.where({user_id: event["source"]["userId"]}).first
         image = Photo.create({
           user_id: user.id,
-          all_story_id: user.photos.length + 1,
+          all_story_id: user.all_story_id,
           url: result['secure_url']
         })
 
@@ -124,9 +119,10 @@ post '/callback' do
         tf.write(response.body)
 
       when 'location'
+        story = AllStory.find(user.all_story_id)
         message = {
           type: 'text',
-          text: hint_location(event.message['latitude'], event.message['longitude'], @goal_lat, @goal_lng)
+          text: hint_location(event.message['latitude'], event.message['longitude'], story.lat, story.lng)
         }
         client.reply_message(event['replyToken'], message)
       end
@@ -149,14 +145,18 @@ post '/callback' do
         }
       ]
       client.reply_message(event['replyToken'], message)
+
     when Line::Bot::Event::Postback
       data =  URI::decode_www_form(event['postback']['data']).to_h
       p data
       case data['action']
       when 'start'
+        user.all_story_id = data["place_id"]
+        user.save
+        story = AllStory.find(data["place_id"])
         message = {
           type: 'text',
-          text: "楽しい冒険が始まるよ！頑張ってね！"
+          text: "目的地は" + story.title + "だね！楽しい冒険が始まるよ！頑張ってね！"
         }
         client.reply_message(event['replyToken'], message)
       when 'giveup'

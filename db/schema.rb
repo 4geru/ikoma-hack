@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171031145416) do
+ActiveRecord::Schema.define(version: 20171202155648) do
 
   create_table "all_stories", force: :cascade do |t|
     t.integer "beacon_id"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20171031145416) do
     t.string "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "all_story_id"
   end
 
 end
