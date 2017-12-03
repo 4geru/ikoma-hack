@@ -1,6 +1,7 @@
 require 'line/bot'
 require './src/hint'
 require './src/start'
+require './src/goal'
 require './src/give_up'
 require './src/clear'
 require './src/picture_book'
@@ -77,23 +78,7 @@ post '/callback' do
           url: result['secure_url']
         })
 
-        message = [
-          {
-            type: 'text',
-            text: "アルバムに画像を保存しました！！おめでとう！！"
-          },
-          {
-            type: "sticker",
-            packageId: "1",
-            stickerId: "407"
-          },
-          {
-            type: 'text',
-            text: image.url
-          }
-        ]
-
-        client.reply_message(event['replyToken'], message)
+        client.reply_message(event['replyToken'], goal_uploaded_photo_message(user))
 
       when Line::Bot::Event::MessageType::Video
         response = client.get_message_content(event.message['id'])
@@ -110,24 +95,7 @@ post '/callback' do
       end
 
     when Line::Bot::Event::Beacon
-      msg = "クリアです！みんなで記念写真を撮ってね！"
-      message = [
-        {
-          type: 'text',
-          text: msg
-        },
-        {
-          type: "sticker",
-          packageId: "1",
-          stickerId: "136"
-        },
-        {
-          type: 'text',
-          text: "idは" + event['beacon']['hwid'] + "です！"
-        }
-      ]
-      client.reply_message(event['replyToken'], message)
-
+      client.reply_message(event['replyToken'], goal_upload_photo_messge(user))
     when Line::Bot::Event::Postback
       data =  URI::decode_www_form(event['postback']['data']).to_h
       p data
