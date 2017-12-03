@@ -86,7 +86,7 @@ post '/callback' do
         tf.write(response.body)
 
       when 'location'
-        story = AllStory.find(user.all_story_id)
+        story = user.all_story
         message = {
           type: 'text',
           text: hint_location(event.message['latitude'], event.message['longitude'], story)
@@ -103,7 +103,7 @@ post '/callback' do
       when 'start'
         user.all_story_id = data["place_id"]
         user.save
-        story = AllStory.find(data["place_id"])
+        story = user.all_story
         message = {
           type: 'text',
           text: "目的地は" + story.title + "だね！楽しい冒険が始まるよ！頑張ってね！"
