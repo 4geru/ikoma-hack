@@ -31,4 +31,3 @@ def goal_upload_photo_messge(user)
     }
   ]
 end
-  

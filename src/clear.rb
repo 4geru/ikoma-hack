@@ -8,6 +8,11 @@ def clear_message
       type: "sticker",
       packageId: "1",
       stickerId: "136"
+    },
+    {
+      type: "uri",
+      label: "撮影",
+      uri: "line://nv/camera/"
     }
   ]
 end
