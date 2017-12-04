@@ -1,10 +1,10 @@
-def hint_confirm()
+def hint_confirm(text = nil)
 {
   "type": "template",
   "altText": "ヒント選択中",
   "template": {
       "type": "confirm",
-      "text": "ヒントを使いますか?",
+      "text": text ? text : "ヒントを使いますか?",
       "actions": [
           {
               "type": "uri",

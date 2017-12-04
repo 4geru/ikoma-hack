@@ -108,7 +108,7 @@ post '/callback' do
           type: 'text',
           text: "目的地は" + story.title + "だね！楽しい冒険が始まるよ！頑張ってね！"
         }
-        client.reply_message(event['replyToken'], message)
+        client.reply_message(event['replyToken'], [message, hint_confirm()])
       when 'giveup'
         message = {
           type: 'text',
